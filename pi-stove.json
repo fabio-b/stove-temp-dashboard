@@ -1,0 +1,1003 @@
+[
+    {
+        "id": "242e154e.c0862a",
+        "type": "tab",
+        "label": "Stove temp",
+        "disabled": false,
+        "info": "Get temperature of stove"
+    },
+    {
+        "id": "d656a1627001230c",
+        "type": "tab",
+        "label": "Notification",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "d0103c0cd3c8546d",
+        "type": "tab",
+        "label": "Stove Temp Display",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "68508c4d4f06cdce",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "localhost",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "5",
+        "keepalive": "60",
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "true",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "12b43cd6c26f817f",
+        "type": "pi_plate",
+        "model": "THERMOplate",
+        "address": "0"
+    },
+    {
+        "id": "d495388582691377",
+        "type": "ui-base",
+        "name": "My Dashboard",
+        "path": "/dashboard",
+        "appIcon": "",
+        "includeClientData": true,
+        "acceptsClientConfig": [
+            "ui-notification",
+            "ui-control"
+        ],
+        "showPathInSidebar": false,
+        "showPageTitle": true,
+        "navigationStyle": "none",
+        "titleBarStyle": "default"
+    },
+    {
+        "id": "0fd11628e9a559e3",
+        "type": "ui-theme",
+        "name": "Default Theme",
+        "colors": {
+            "surface": "#ffffff",
+            "primary": "#0094CE",
+            "bgPage": "#eeeeee",
+            "groupBg": "#ffffff",
+            "groupOutline": "#cccccc"
+        },
+        "sizes": {
+            "density": "default",
+            "pagePadding": "12px",
+            "groupGap": "12px",
+            "groupBorderRadius": "4px",
+            "widgetGap": "12px"
+        }
+    },
+    {
+        "id": "a0e8ef6e1f2eddba",
+        "type": "ui-page",
+        "name": "Stove Temp",
+        "ui": "d495388582691377",
+        "path": "/temp",
+        "icon": "home",
+        "layout": "grid",
+        "theme": "0fd11628e9a559e3",
+        "breakpoints": [
+            {
+                "name": "Default",
+                "px": "0",
+                "cols": "1"
+            },
+            {
+                "name": "Tablet",
+                "px": "576",
+                "cols": "1"
+            },
+            {
+                "name": "Small Desktop",
+                "px": "768",
+                "cols": "2"
+            },
+            {
+                "name": "Desktop",
+                "px": "1024",
+                "cols": "2"
+            }
+        ],
+        "order": 1,
+        "className": "",
+        "visible": "true",
+        "disabled": "false"
+    },
+    {
+        "id": "2e417d01b358895f",
+        "type": "ui-group",
+        "name": "Current Temperature",
+        "page": "a0e8ef6e1f2eddba",
+        "width": "6",
+        "height": "3",
+        "order": 1,
+        "showTitle": true,
+        "className": "",
+        "visible": "true",
+        "disabled": "false",
+        "groupType": "default"
+    },
+    {
+        "id": "de7898f38d0efe71",
+        "type": "ui-group",
+        "name": "Last 24hrs",
+        "page": "a0e8ef6e1f2eddba",
+        "width": "6",
+        "height": "3",
+        "order": 2,
+        "showTitle": true,
+        "className": "",
+        "visible": "true",
+        "disabled": "false",
+        "groupType": "default"
+    },
+    {
+        "id": "c231d511.eb9cc8",
+        "type": "debug",
+        "z": "242e154e.c0862a",
+        "name": "debug",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 910,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "71baafe0.47058",
+        "type": "inject",
+        "z": "242e154e.c0862a",
+        "name": "timestamp",
+        "props": [],
+        "repeat": "5",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 120,
+        "y": 360,
+        "wires": [
+            [
+                "3658e88d4acb3388",
+                "d0fc713ad6ac44f1"
+            ]
+        ]
+    },
+    {
+        "id": "3e58a492.fabc5c",
+        "type": "change",
+        "z": "242e154e.c0862a",
+        "name": "Format Temp",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "$round(msg.payload, 0)",
+                "tot": "jsonata"
+            },
+            {
+                "t": "set",
+                "p": "type",
+                "pt": "msg",
+                "to": "probeTemp",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "Probe Temp",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 290,
+        "y": 540,
+        "wires": [
+            [
+                "cf256df46564cc38",
+                "e458b8a46f7a3515",
+                "9481e8ea13a0c415"
+            ]
+        ]
+    },
+    {
+        "id": "569c821.73da17c",
+        "type": "switch",
+        "z": "242e154e.c0862a",
+        "name": "Hot Temp",
+        "property": "payload.stt",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "gte",
+                "v": "700",
+                "vt": "num"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 1,
+        "x": 760,
+        "y": 240,
+        "wires": [
+            [
+                "c231d511.eb9cc8",
+                "aee7e115.30983"
+            ]
+        ]
+    },
+    {
+        "id": "aee7e115.30983",
+        "type": "link out",
+        "z": "242e154e.c0862a",
+        "name": "STT wire out",
+        "mode": "link",
+        "links": [
+            "bff722460b81e21a"
+        ],
+        "x": 1015,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "2186392e.0714d6",
+        "type": "change",
+        "z": "242e154e.c0862a",
+        "name": "Format Temp",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "$round(msg.payload, 0)\t",
+                "tot": "jsonata"
+            },
+            {
+                "t": "set",
+                "p": "type",
+                "pt": "msg",
+                "to": "stt",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "Stove Temp",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 350,
+        "y": 100,
+        "wires": [
+            [
+                "cf256df46564cc38",
+                "85599614f3ef16a4",
+                "9481e8ea13a0c415"
+            ]
+        ]
+    },
+    {
+        "id": "cf256df46564cc38",
+        "type": "join",
+        "z": "242e154e.c0862a",
+        "name": "",
+        "mode": "custom",
+        "build": "object",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "type",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "useparts": true,
+        "accumulate": false,
+        "timeout": "",
+        "count": "2",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "num",
+        "reduceFixup": "",
+        "x": 530,
+        "y": 300,
+        "wires": [
+            [
+                "569c821.73da17c",
+                "cb24a1babb0e9d9d",
+                "f2e0612aec590205"
+            ]
+        ]
+    },
+    {
+        "id": "cb24a1babb0e9d9d",
+        "type": "switch",
+        "z": "242e154e.c0862a",
+        "name": "Probe Temp Hot",
+        "property": "payload.probeTemp",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "gte",
+                "v": "800",
+                "vt": "num"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 1,
+        "x": 740,
+        "y": 360,
+        "wires": [
+            [
+                "c231d511.eb9cc8",
+                "3545b5deb2b1e2fc"
+            ]
+        ]
+    },
+    {
+        "id": "3545b5deb2b1e2fc",
+        "type": "link out",
+        "z": "242e154e.c0862a",
+        "name": "Probe wire out",
+        "mode": "link",
+        "links": [
+            "8784cbf2a783e8c6"
+        ],
+        "x": 1015,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "04126b6b4f6e07f3",
+        "type": "comment",
+        "z": "242e154e.c0862a",
+        "d": true,
+        "name": "Pi-plate",
+        "info": " - Check SPI is enabled in rpi config\n - (pi-plates npm < 0.3.0) Be sure to have pi-plate python module installed with \n`sudo pip3 install pi-plates`",
+        "x": 90,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "3658e88d4acb3388",
+        "type": "ppTHERMO",
+        "z": "242e154e.c0862a",
+        "config_plate": "12b43cd6c26f817f",
+        "name": "Stove Top Thermocouple",
+        "channel": "1",
+        "scale": "f",
+        "tc_type": "k",
+        "x": 150,
+        "y": 100,
+        "wires": [
+            [
+                "2186392e.0714d6"
+            ]
+        ]
+    },
+    {
+        "id": "d0fc713ad6ac44f1",
+        "type": "ppTHERMO",
+        "z": "242e154e.c0862a",
+        "config_plate": "12b43cd6c26f817f",
+        "name": "Probe Thermo",
+        "channel": "4",
+        "scale": "f",
+        "tc_type": "k",
+        "x": 120,
+        "y": 540,
+        "wires": [
+            [
+                "3e58a492.fabc5c"
+            ]
+        ]
+    },
+    {
+        "id": "e458b8a46f7a3515",
+        "type": "ui-gauge",
+        "z": "242e154e.c0862a",
+        "name": "",
+        "group": "2e417d01b358895f",
+        "order": 2,
+        "width": "6",
+        "height": "3",
+        "gtype": "gauge-half",
+        "gstyle": "rounded",
+        "title": "Stack",
+        "units": "degrees F",
+        "icon": "",
+        "prefix": "",
+        "suffix": "",
+        "segments": [
+            {
+                "from": "0",
+                "color": "#e6e600"
+            },
+            {
+                "from": "360",
+                "color": "#00b500"
+            },
+            {
+                "from": "800",
+                "color": "#ea5353"
+            },
+            {
+                "from": "900",
+                "color": "#000000"
+            }
+        ],
+        "min": "100",
+        "max": "1100",
+        "sizeThickness": 16,
+        "sizeGap": 4,
+        "sizeKeyThickness": 8,
+        "styleRounded": true,
+        "styleGlow": false,
+        "className": "",
+        "x": 490,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "85599614f3ef16a4",
+        "type": "ui-gauge",
+        "z": "242e154e.c0862a",
+        "name": "Stove Top",
+        "group": "2e417d01b358895f",
+        "order": 1,
+        "width": "6",
+        "height": "3",
+        "gtype": "gauge-half",
+        "gstyle": "rounded",
+        "title": "Stove Top",
+        "units": "degrees F",
+        "icon": "",
+        "prefix": "",
+        "suffix": "",
+        "segments": [
+            {
+                "from": "0",
+                "color": "#e6e600"
+            },
+            {
+                "from": "400",
+                "color": "#00b500"
+            },
+            {
+                "from": "700",
+                "color": "#ea5353"
+            }
+        ],
+        "min": "100",
+        "max": "800",
+        "sizeThickness": 16,
+        "sizeGap": 4,
+        "sizeKeyThickness": 8,
+        "styleRounded": true,
+        "styleGlow": false,
+        "className": "",
+        "x": 540,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "5f435a9e35a3b94b",
+        "type": "rbe",
+        "z": "242e154e.c0862a",
+        "name": "Detect Movement of Temp",
+        "func": "deadbandEq",
+        "gap": "1%",
+        "start": "",
+        "inout": "in",
+        "septopics": true,
+        "property": "payload",
+        "topi": "topic",
+        "x": 800,
+        "y": 600,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "667159bad0939702",
+        "type": "ui-chart",
+        "z": "242e154e.c0862a",
+        "group": "de7898f38d0efe71",
+        "name": "Temperature Chart",
+        "label": "Temperature Log",
+        "order": 9007199254740991,
+        "chartType": "line",
+        "category": "topic",
+        "categoryType": "msg",
+        "xAxisLabel": "Time",
+        "xAxisProperty": "",
+        "xAxisPropertyType": "timestamp",
+        "xAxisType": "time",
+        "xAxisFormat": "",
+        "xAxisFormatType": "HH:mm",
+        "xmin": "",
+        "xmax": "",
+        "yAxisLabel": "Temperature",
+        "yAxisProperty": "payload",
+        "yAxisPropertyType": "msg",
+        "ymin": "0",
+        "ymax": "",
+        "bins": 10,
+        "action": "append",
+        "stackSeries": false,
+        "pointShape": "false",
+        "pointRadius": "4",
+        "showLegend": true,
+        "removeOlder": "24",
+        "removeOlderUnit": "3600",
+        "removeOlderPoints": "",
+        "colors": [
+            "#0095ff",
+            "#ff0000",
+            "#ff7f0e",
+            "#2ca02c",
+            "#a347e1",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "textColor": [
+            "#666666"
+        ],
+        "textColorDefault": true,
+        "gridColor": [
+            "#e5e5e5"
+        ],
+        "gridColorDefault": true,
+        "width": 6,
+        "height": 8,
+        "className": "",
+        "interpolation": "linear",
+        "x": 350,
+        "y": 300,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f2e0612aec590205",
+        "type": "link out",
+        "z": "242e154e.c0862a",
+        "name": "Display Temp Out",
+        "mode": "link",
+        "links": [
+            "086c81642792e008"
+        ],
+        "x": 925,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "9481e8ea13a0c415",
+        "type": "delay",
+        "z": "242e154e.c0862a",
+        "name": "",
+        "pauseType": "timed",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "5",
+        "rateUnits": "minute",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": true,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 320,
+        "y": 220,
+        "wires": [
+            [
+                "667159bad0939702",
+                "f669259741453be8"
+            ]
+        ]
+    },
+    {
+        "id": "f669259741453be8",
+        "type": "debug",
+        "z": "242e154e.c0862a",
+        "name": "debug 4",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 600,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "bff722460b81e21a",
+        "type": "link in",
+        "z": "d656a1627001230c",
+        "name": "STT wire in",
+        "links": [
+            "aee7e115.30983"
+        ],
+        "x": 175,
+        "y": 100,
+        "wires": [
+            [
+                "21e2f930c4577e7a"
+            ]
+        ]
+    },
+    {
+        "id": "956bd44c17edba56",
+        "type": "trigger",
+        "z": "d656a1627001230c",
+        "name": "",
+        "op1": "",
+        "op2": "",
+        "op1type": "pay",
+        "op2type": "nul",
+        "duration": "5",
+        "extend": false,
+        "overrideDelay": false,
+        "units": "min",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 470,
+        "y": 260,
+        "wires": [
+            [
+                "eb08163540082e92"
+            ]
+        ]
+    },
+    {
+        "id": "21e2f930c4577e7a",
+        "type": "function",
+        "z": "d656a1627001230c",
+        "name": "Set email subject to stove top",
+        "func": "msg.topic = 'Stove Top Temperature Warning';\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 410,
+        "y": 100,
+        "wires": [
+            [
+                "645c0abc0f0709df"
+            ]
+        ]
+    },
+    {
+        "id": "39dd269f0e452a97",
+        "type": "function",
+        "z": "d656a1627001230c",
+        "name": "Set email subject to probe",
+        "func": "msg.topic = 'Probe Temperature Warning';\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 420,
+        "y": 160,
+        "wires": [
+            [
+                "565167c50912e4df"
+            ]
+        ]
+    },
+    {
+        "id": "645c0abc0f0709df",
+        "type": "function",
+        "z": "d656a1627001230c",
+        "name": "Return stt temp",
+        "func": "msg.payload = msg.payload.stt;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 660,
+        "y": 100,
+        "wires": [
+            [
+                "956bd44c17edba56"
+            ]
+        ]
+    },
+    {
+        "id": "565167c50912e4df",
+        "type": "function",
+        "z": "d656a1627001230c",
+        "name": "Return probe temp",
+        "func": "msg.payload = msg.payload.probeTemp;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 670,
+        "y": 160,
+        "wires": [
+            [
+                "956bd44c17edba56"
+            ]
+        ]
+    },
+    {
+        "id": "8784cbf2a783e8c6",
+        "type": "link in",
+        "z": "d656a1627001230c",
+        "name": "Probe wire in",
+        "links": [
+            "3545b5deb2b1e2fc"
+        ],
+        "x": 175,
+        "y": 160,
+        "wires": [
+            [
+                "39dd269f0e452a97"
+            ]
+        ]
+    },
+    {
+        "id": "a32e672652a81264",
+        "type": "comment",
+        "z": "d656a1627001230c",
+        "name": "Email",
+        "info": "Use app password in google security settings",
+        "x": 210,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "eb08163540082e92",
+        "type": "e-mail",
+        "z": "d656a1627001230c",
+        "server": "smtp.gmail.com",
+        "port": "465",
+        "authtype": "BASIC",
+        "saslformat": true,
+        "token": "oauth2Response.access_token",
+        "secure": true,
+        "tls": true,
+        "name": "xxx@gmail.com",
+        "dname": "Email Me",
+        "x": 700,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "8863ad199d0b89cb",
+        "type": "function",
+        "z": "d0103c0cd3c8546d",
+        "name": "Display Temps",
+        "func": "// NPM module exposed as variable\n\nconst maxDisplay = context.get('display');\nconst showTemp = context.get('showTempFn');\n\nconst stt = 'S' + String(msg.payload.stt).padStart(3, '0');\nawait showTemp(stt);\n\nsetTimeout(async () => {\n    const probeTemp = 'P' + String(msg.payload.probeTemp).padStart(3, '0');\n    await showTemp(probeTemp);\n}, 2500);\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "// Code added here will be run once\n// whenever the node is started.\n\ncontext.set('displayInProgress', false);\n\nconst maxDisplay = new max7219Display({\n    device: '/dev/spidev0.0',\n    controllerCount: 4,\n    reverseDisplayOrdering: false\n});\n\nawait maxDisplay.resetAll();\n\nasync function showTemp(temp) {\n    const wait = context.get('displayInProgress');\n    if (!wait) {\n        const letters = temp.split('');\n        context.set('displayInProgress', true);\n        await letters.forEach(async (letter, i) => {\n            await maxDisplay.letter(i, letter);\n        });\n        context.set('displayInProgress', false);\n    }\n}\n\ncontext.set('display', maxDisplay);\ncontext.set('showTempFn', showTemp);",
+        "finalize": "",
+        "libs": [
+            {
+                "var": "max7219Display",
+                "module": "max7219-display"
+            }
+        ],
+        "x": 420,
+        "y": 260,
+        "wires": [
+            [
+                "16b422f301da30ed"
+            ]
+        ]
+    },
+    {
+        "id": "8b11cbb3fa5355b7",
+        "type": "debug",
+        "z": "d0103c0cd3c8546d",
+        "name": "debug 1",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 500,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "086c81642792e008",
+        "type": "link in",
+        "z": "d0103c0cd3c8546d",
+        "name": "Display Temp In",
+        "links": [
+            "f2e0612aec590205"
+        ],
+        "x": 125,
+        "y": 260,
+        "wires": [
+            [
+                "8b11cbb3fa5355b7",
+                "cb08d50a693fdbb6"
+            ]
+        ]
+    },
+    {
+        "id": "d1f7027692ab5fa1",
+        "type": "debug",
+        "z": "d0103c0cd3c8546d",
+        "name": "debug 2",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 620,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "16b422f301da30ed",
+        "type": "debug",
+        "z": "d0103c0cd3c8546d",
+        "name": "Temp Finished Debug",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 660,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "cb08d50a693fdbb6",
+        "type": "function",
+        "z": "d0103c0cd3c8546d",
+        "name": "Check Temp Change",
+        "func": "const temps = context.get('temps');\n\nmsg.isSame = false;\n\n// node.warn(context.get('temps'));\n\nif (temps) {\n    if (temps.probeTemp === msg.payload.probeTemp && temps.stt === msg.payload.stt) {\n        msg.isSame = true;\n    }\n}\n\ncontext.set('temps', msg.payload);\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 240,
+        "y": 360,
+        "wires": [
+            [
+                "9aebd28470c13963",
+                "f0c0a9f3ac6c0d6d"
+            ]
+        ]
+    },
+    {
+        "id": "9aebd28470c13963",
+        "type": "debug",
+        "z": "d0103c0cd3c8546d",
+        "name": "debug 3",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 420,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "f0c0a9f3ac6c0d6d",
+        "type": "switch",
+        "z": "d0103c0cd3c8546d",
+        "name": "",
+        "property": "isSame",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "false"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 430,
+        "y": 360,
+        "wires": [
+            [
+                "8863ad199d0b89cb",
+                "d1f7027692ab5fa1",
+                "d935cdc6fbe0912f"
+            ]
+        ]
+    },
+    {
+        "id": "d935cdc6fbe0912f",
+        "type": "mqtt out",
+        "z": "d0103c0cd3c8546d",
+        "name": "",
+        "topic": "stove-temp-to-display",
+        "qos": "0",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "68508c4d4f06cdce",
+        "x": 240,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "fab19a867e862837",
+        "type": "comment",
+        "z": "d0103c0cd3c8546d",
+        "d": true,
+        "name": "mqtt",
+        "info": "https://pimylifeup.com/raspberry-pi-mosquitto-mqtt-server/\n\nv5 \n\nsudo apt install mosquitto mosquitto-clients\nsudo systemctl status mosquitto\n\nv2+ enable remote access to broker\nadd to /etc/mosquitto/mosquitto.conf\n```\nallow_anonymous true\nlistener 1883\n```\nrestart mosquitto\n`sudo systemctl restart mosquitto`",
+        "x": 190,
+        "y": 660,
+        "wires": []
+    }
+]

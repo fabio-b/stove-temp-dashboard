@@ -1,0 +1,12 @@
+{
+  "name": "node-red-project",
+  "description": "initially created for you by Node-RED 4.0.5",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "@flowfuse/node-red-dashboard": "~1.21.0",
+    "max7219-display": "^2.1.0",
+    "node-red-contrib-pi-plates": "^0.3.0",
+    "node-red-node-email": "^3.0.2"
+  }
+}
